@@ -5,12 +5,14 @@ import * as FileModule from 'fs/promises';
 
 // http://expressjs.com/en/5x/api.html#express.json
 const app = express()
-// Problematic
+// Problematic: when the json parse fails, it throws an internal error
 app.use(express.json({ type() { return true; }}))
 
 const DATA_FILE_PATH = PathModule.join(new URL(import.meta.url).pathname, '..', 'data.json')
 
 const data = {};
+
+// URGNET TODO!!! Load data from file. Currently it overwrites any existing data. 
 
 async function saveToFile() {
     await FileModule.writeFile(DATA_FILE_PATH, JSON.stringify(data, null, 4), { flag: 'w+' });
