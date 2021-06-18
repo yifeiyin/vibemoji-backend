@@ -12,12 +12,35 @@ const DATA_FILE_PATH = PathModule.join(new URL(import.meta.url).pathname, '..', 
 
 const data = {};
 
-// URGNET TODO!!! Load data from file. Currently it overwrites any existing data. 
+async function readFromFile() {
+    try {
+        let content = await FileModule.readFile(DATA_FILE_PATH);
+        content = JSON.parse(content);
+        Object.assign(data, content);
+        console.log('Successfully loaded data from file.')
+    } catch (error) {
+        console.error('Error when trying to load from file:')
+        console.error(error);
+        console.error('Using empty data instead.');
+    }
+}
 
 async function saveToFile() {
     await FileModule.writeFile(DATA_FILE_PATH, JSON.stringify(data, null, 4), { flag: 'w+' });
 }
 setInterval(saveToFile, 5 * 1000);
+
+function startServer() {
+    const PORT = 3000;
+    const HOSTNAME = '0.0.0.0';
+    app.listen(PORT, HOSTNAME, () => {
+        console.log(`Example app listening at http://${HOSTNAME}:${PORT}`)
+    });
+}
+
+readFromFile().then(() => {
+    startServer();
+})
 
 
 app.get('/', (req, res) => {
@@ -42,10 +65,26 @@ app.post('/vibration/answer', (req, res) => {
     res.status(200).end();
 })
 
-const PORT = 3000;
-const HOSTNAME = '0.0.0.0';
-app.listen(PORT, HOSTNAME, () => {
-    console.log(`Example app listening at http://${HOSTNAME}:${PORT}`)
+app.post('/vibration/pre-q', (req, res) => {
+    const { userID, answerContent } = req.body;
+    if (!(userID in data)) {
+        return res.status(400).json({ message: 'User id was not found: ' + userID });
+    }
+
+    data[userID]['pre'] = { timestamp: new Date(), answerContent };
+
+    res.status(200).end();
+})
+
+app.post('/vibration/post-q', (req, res) => {
+    const { userID, answerContent } = req.body;
+    if (!(userID in data)) {
+        return res.status(400).json({ message: 'User id was not found: ' + userID });
+    }
+
+    data[userID]['post'] = { timestamp: new Date(), answerContent };
+
+    res.status(200).end();
 })
 
 function UUIDv4() {
