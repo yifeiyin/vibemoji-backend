@@ -1,4 +1,12 @@
-/0.0.0.0:3000
-/data 202106150245.json
-/data.json
-/node_modules
+venv/
+env/
+__pyche__/
+
+node_modules/
+.DS_Store
+
+tmp/
+
+.eslintcache
+
+data*.json
