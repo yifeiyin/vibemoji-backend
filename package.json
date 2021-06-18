@@ -12,7 +12,5 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "jest": "^27.0.4",
-    "node-fetch": "^2.6.1"
   }
 }
