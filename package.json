@@ -5,7 +5,6 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "watch-test": "jest --watch .",
     "start": "node index.js"
   },
   "author": "Yifei Yin",
