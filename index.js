@@ -26,7 +26,7 @@ async function readFromFile() {
 }
 
 async function saveToFile() {
-    await FileModule.writeFile(DATA_FILE_PATH, JSON.stringify(data, null, 4), { flag: 'w+' });
+    await FileModule.writeFile(DATA_FILE_PATH, JSON.stringify(data, null, 2), { flag: 'w+' });
 }
 setInterval(saveToFile, 5 * 1000);
 
