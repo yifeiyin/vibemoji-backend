@@ -18,20 +18,16 @@ POST /vibration/answer
     answerContent: [int]
 }
 
-POST /vibration/pre ?
+POST /vibration/pre-q
 {
     userID:
-    answer: {
-
-    }
+    answerContent:
 }
 
-POST /vibration/post ?
+POST /vibration/post-q
 {
     userID:
-    answer: {
-
-    }
+    answerContent:
 }
 ```
 
