@@ -48,7 +48,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/inspection', (req, res) => {
-    res.status(200).end(JSON.stringify(data, null, 2));
+    res.status(200);
+    res.append('Content-Type', 'text/plain; charset=utf8');
+    res.end(JSON.stringify(data, null, 2));
 })
 
 app.get('/vibration/new', (req, res) => {
