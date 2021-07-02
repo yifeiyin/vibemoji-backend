@@ -47,6 +47,10 @@ app.get('/', (req, res) => {
     res.status(200).end('OK');
 })
 
+app.get('/inspection', (req, res) => {
+    res.status(200).end(JSON.stringify(data, null, 2));
+})
+
 app.get('/vibration/new', (req, res) => {
     const newUserId = UUIDv4();
     data[newUserId] = {};
